@@ -20,7 +20,7 @@
   </div>
 
   <script>
-    const apiUrl = "http://localhost:8080/getMyAccount";
+    const apiUrl = "https://springsecuritytrail.onrender.com/getMyAccount";
     const jwtToken = localStorage.getItem("jwtToken");
 
     let userDetails = {}; // Global variable to store fetched user details
@@ -69,7 +69,7 @@
       }
 
       if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-        fetch("http://localhost:8080/deleteAccount", {
+        fetch("https://springsecuritytrail.onrender.com/deleteAccount", {
           method: "DELETE",
           headers: {
             "Authorization": `Bearer ${jwtToken}`,
@@ -110,7 +110,7 @@
       };
 
       // Send the updated data to the backend
-      fetch("http://localhost:8080/updateAccount", {
+      fetch("https://springsecuritytrail.onrender.com/updateAccount", {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${jwtToken}`,

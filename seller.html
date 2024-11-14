@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Lobster&family=Pacifico&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="seller.css" />
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="header">
+      <img src="shopStop.png" alt="logo" />
+
+      <div class="header-content">
+        <button class="profile-button" onclick="viewProfile()">
+          <img src="profile.png" alt="Profile" />
+        </button>
+        <button class="add-product-button" onclick="addProduct()">
+          Add New Product
+        </button>
+        <button class="view-orders-button" onclick="viewOrders()">
+          View Orders
+        </button>
+        <button class="logout-button" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <h2>Seller Products</h2>
+      <!-- Container to display products -->
+      <div id="productList" class="product-list"></div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2024 ShopStop. All Rights Reserved.</p>
+        <div class="footer-links">
+          <a href="#about">About Us</a> | <a href="#contact">Contact</a> |
+          <a href="#privacy">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="seller.js"></script>
+  </body>
+</html>

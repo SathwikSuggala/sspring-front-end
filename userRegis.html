@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: rgba(16, 17, 17, 0.6);
+        background-image: url("back.jpg");
+        background-size: cover;
+        background-attachment: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 50%;
+        max-width: 600px;
+        background-color: rgb(240, 230, 230, 0.8);
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        margin-top: 50px;
+        animation: fadeIn 0.6s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        text-align: center;
+        font-size: 24px;
+        color: #333333;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-weight: bold;
+        color: #333333;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        border: 1px solid #cccccc;
+        border-radius: 6px;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .form-group button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 6px;
+        width: 100%;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      #gender {
+        height: 30px;
+        width: 150px;
+        border-radius: 10px;
+      }
+      .form-group button:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(33, 136, 56, 0.3);
+      }
+
+      .form-group .secondary-btn {
+        background-color: #007bff;
+        margin-top: 10px;
+        color: white;
+      }
+
+      .form-group .secondary-btn:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+      }
+
+      .error-message {
+        color: #dc3545;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      .success-message {
+        color: #28a745;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 90%;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Register</h2>
+
+      <div class="error-message" id="error-message"></div>
+      <div class="success-message" id="success-message"></div>
+
+      <form id="registration-form">
+        <div class="form-group">
+          <label for="userName">Username:</label>
+          <input type="text" id="userName" name="userName" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="mobileNumber">Mobile Number:</label>
+          <input type="text" id="mobileNumber" name="mobileNumber" required />
+        </div>
+        <div class="form-group">
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" required />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="lastName" required />
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth:</label>
+          <input type="date" id="dateOfBirth" name="dateOfBirth" required />
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender" required>
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <button
+            type="button"
+            id="user-register-btn"
+            onclick="register('user')"
+          >
+            Register as User
+          </button>
+          <button
+            type="button"
+            id="seller-register-btn"
+            class="secondary-btn"
+            onclick="register('seller')"
+          >
+            Register as Seller
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const apiUrl = "https://springsecuritytrail.onrender.com"; // Update with your backend API URL
+
+      function register(type) {
+        // Hide previous messages
+        document.getElementById("error-message").innerText = "";
+        document.getElementById("success-message").innerText = "";
+
+        // Collect form data
+        const userDto = {
+          userName: document.getElementById("userName").value,
+          password: document.getElementById("password").value,
+          email: document.getElementById("email").value,
+          mobileNumber: document.getElementById("mobileNumber").value,
+          firstName: document.getElementById("firstName").value,
+          lastName: document.getElementById("lastName").value,
+          dateOfBirth: document.getElementById("dateOfBirth").value,
+          gender: document.getElementById("gender").value,
+        };
+
+        // Define the endpoint
+        let endpoint = type === "user" ? "/register" : "/sellers/register";
+
+        // Send registration request
+        fetch(apiUrl + endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userDto),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              return response.text().then((text) => {
+                throw new Error(text);
+              });
+            }
+            return response.json();
+          })
+          .then((data) => {
+            document.getElementById("success-message").innerText =
+              "Registration successful!";
+            console.log(data);
+
+            // Redirect to OTP page after successful registration
+            window.location.href = "otp.html"; // Update with the correct OTP page URL
+          })
+          .catch((error) => {
+            document.getElementById(
+              "error-message"
+            ).innerText = `Error: ${error.message}`;
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,169 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Page Title */
+h2 {
+  font-size: 2.5rem;
+  color: hwb(0 1% 99%);
+  margin-bottom: 30px;
+  text-align: center;
+  font-family: "Lobster", sans-serif;
+}
+
+/* Form Styling */
+#addProductForm {
+  background-color: #fff;
+  padding: 30px;
+  width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: fadeIn 1s ease-out;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-size: 1rem;
+  color: #555;
+}
+
+input,
+select,
+textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #007bff;
+}
+
+textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+/* Button Styling */
+button {
+  padding: 12px 0;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  #addProductForm {
+    width: 90%;
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Animation for Fade-In Effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* For form validation messages (optional) */
+input:invalid,
+textarea:invalid,
+select:invalid {
+  border-color: #ff0000;
+}
+
+input:valid,
+textarea:valid,
+select:valid {
+  border-color: #28a745;
+}
+/* Footer Styles */
+.footer {
+  background-color: #333;
+  color: #000000;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.footer-links {
+  font-size: 1rem;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    font-size: 0.9rem;
+  }
+}

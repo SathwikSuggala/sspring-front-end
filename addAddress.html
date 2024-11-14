@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Address</title>
+    <link rel="stylesheet" href="addAddress.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Lobster&family=Pacifico&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Add New Address</h1>
+    </header>
+
+    <main>
+      <div id="error-message" style="display: none; color: red"></div>
+
+      <!-- Address Form -->
+      <form id="address-form" onsubmit="handleFormSubmit(event)">
+        <label for="addressName">Address Name</label>
+        <input type="text" id="addressName" name="addressName" required />
+
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" required />
+
+        <label for="mobileNumber">Mobile Number</label>
+        <input type="text" id="mobileNumber" name="mobileNumber" required />
+
+        <label for="houseNumber">House Number</label>
+        <input type="text" id="houseNumber" name="houseNumber" required />
+
+        <label for="street">Street</label>
+        <input type="text" id="street" name="street" required />
+
+        <label for="landMark">Landmark</label>
+        <input type="text" id="landMark" name="landMark" required />
+
+        <label for="pinCode">Pin Code</label>
+        <input type="text" id="pinCode" name="pinCode" required />
+
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" required />
+
+        <label for="state">State</label>
+        <input type="text" id="state" name="state" required />
+
+        <label for="country">Country</label>
+        <input type="text" id="country" name="country" required />
+
+        <button type="submit">Add Address</button>
+      </form>
+    </main>
+
+    <script src="addAddress.js"></script>
+  </body>
+</html>

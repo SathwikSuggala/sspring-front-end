@@ -1,0 +1,303 @@
+/* Reset Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 1s ease-out;
+}
+
+/* Header Section */
+.header {
+  width: 100%;
+  padding: 15px 30px;
+  background-color: #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.6s ease-out;
+}
+
+.header img {
+  height: 100px;
+  border-radius: 50%;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Button Styles */
+button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  color: #070707;
+  background-color: #e5ecf3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #a5834f;
+  transform: scale(1.05);
+}
+
+.profile-button {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+.profile-button img {
+  height: 40px;
+  border-radius: 50%;
+}
+
+.logout-button,
+.add-product-button,
+.view-orders-button {
+  background-color: #f8f8f8;
+}
+
+.logout-button:hover,
+.add-product-button:hover,
+.view-orders-button:hover {
+  background-color: #c78624;
+}
+
+/* Main Content */
+.main {
+  width: 600px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  animation: fadeInUp 1s ease-out;
+}
+
+h2 {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: "Lobster", sans-serif;
+  text-align: center;
+  margin: 20px;
+}
+
+/* Product List */
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.product-item {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  width: 500px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s, transform 0.2s;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.product-item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.product-image {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 15px;
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.05);
+}
+
+.content {
+  text-align: left;
+}
+
+.content h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.content p {
+  color: #555;
+  margin: 5px 0;
+}
+
+.price {
+  font-weight: bold;
+  color: #ff5722;
+  font-size: 1.2rem;
+}
+
+.update-btn,
+.delete-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.update-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.update-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.delete-btn {
+  background-color: #ff5722;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background-color: #e64a19;
+  transform: scale(1.05);
+}
+
+/* Order List Modal */
+.order-list {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 100;
+  display: none;
+  overflow-y: auto;
+  max-height: 70vh;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.order-list h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.order-item {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.order-item pre {
+  white-space: pre-wrap;
+  color: #444;
+}
+
+.order-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.order-list::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 4px;
+}
+
+.order-list::-webkit-scrollbar-thumb:hover {
+  background-color: #bbb;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Footer Styles */
+.footer {
+  background-color: #333;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.footer-links {
+  font-size: 1rem;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product List</title>
+    <link rel="stylesheet" href="home.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Lobster&family=Pacifico&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="header">
+      <div class="header-content">
+        <!-- Logo -->
+        <img src="shopStop.png" alt="Logo" class="logo" />
+
+        <h1 id="admin-title"><span id="username"></span></h1>
+
+        <!-- Search bar -->
+        <input
+          type="text"
+          id="search-bar"
+          placeholder="Search products..."
+          oninput="searchProducts()"
+        />
+
+        <button class="profile-button" onclick="viewProfile()">
+          <img src="profile.png" alt="Profile" />
+        </button>
+        <button class="logout-button" onclick="logout()">Logout</button>
+        <button class="addresses-button" onclick="myAddress()">
+          My Addresses
+        </button>
+        <button class="addAddress-button" onclick="addAddress()">
+          Add Addresses
+        </button>
+        <button class="cart-button" onclick="cart()">Cart</button>
+        <button class="orders-button" onclick="myOrders()">My Orders</button>
+      </div>
+      <select id="category-dropdown" onchange="filterByCategory()">
+        <option value="">Select Category</option>
+        <option value="MOBILES">Mobiles</option>
+        <option value="COMPUTERS">Computers</option>
+        <option value="ELECTRONICS">Electronics</option>
+        <option value="MEN_FASHION">Men's Fashion</option>
+        <option value="WOMEN_FASHION">Women's Fashion</option>
+        <option value="HOME">Home</option>
+        <option value="GROCERY">Grocery</option>
+        <option value="SKIN_CARE">Skin Care</option>
+        <option value="SPORTS">Sports</option>
+        <option value="FITNESS">Fitness</option>
+        <option value="LUGGAGE">Luggage</option>
+        <option value="TOYS">Toys</option>
+        <option value="KIDS_FASHION">Kids' Fashion</option>
+        <option value="BOOKS">Books</option>
+      </select>
+    </header>
+
+    <img src="banner.png" alt="banner" class="banner" />
+    <div id="product-list">
+      <!-- Products will be displayed here -->
+    </div>
+    <div id="pagination-controls"></div>
+    <!-- Footer Section -->
+    <footer>
+      <div class="footer-content">
+        <p>&copy; 2024 ShopStop. All rights reserved.</p>
+        <p>
+          <a href="#">Privacy Policy</a> |
+          <a href="#">Terms of Service</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="home.js"></script>
+  </body>
+</html>
