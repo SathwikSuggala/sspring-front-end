@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Lobster&family=Pacifico&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="header">
+      <div class="header-content">
+        <!-- Logo -->
+        <img src="shopStop.png" alt="Logo" class="logo" />
+        <h1 id="admin-title">Admin - <span id="username"></span></h1>
+        <button class="profile-button" onclick="viewProfile()">
+          <img src="profile.png" alt="Profile" />
+        </button>
+        <button class="logout-button" onclick="logout()">Logout</button>
+        <button class="orders-button" onclick="allOrders()">orders</button>
+        <button class="Accounts" onclick="Accounts()">Users</button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <h2>Welcome to the Admin Dashboard</h2>
+
+      <!-- Button to Fetch Rejected Requests -->
+      <div class="header-buttons">
+        <button id="fetchRejectedRequests" class="button">
+          Fetch Rejected Requests
+        </button>
+      </div>
+
+      <!-- Seller Requests Section -->
+      <section id="requests-section">
+        <h3>Seller Requests</h3>
+        <div id="requests-list"></div>
+      </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </footer>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Details</title>
+  <link rel="stylesheet" href="userDetail.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Lobster&family=Pacifico&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <h1>User Details</h1>
+  <div id="user-details">
+    <!-- User details will be injected here -->
+  </div>
+
+  <div class="button-container">
+    <a href="admin.html" class="button">Back to Dashboard</a>
+    <a href="#" id="deleteAccount" class="delete-button">Delete Account</a>
+    <a href="#" id="updateAccount" class="update-button">Update Account</a>
+  </div>
+
+  <script>
+    const apiUrl = "http://localhost:8080/getMyAccount";
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    let userDetails = {}; // Global variable to store fetched user details
+
+    if (jwtToken) {
+      // Fetch user details from the API
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwtToken}`
+        }
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch user details");
+        return response.json();
+      })
+      .then(data => {
+        userDetails = data; // Store user details globally
+        const userDetailsDiv = document.getElementById("user-details");
+        userDetailsDiv.innerHTML = `
+          <p><strong>Username:</strong> ${userDetails.userName}</p>
+          <p><strong>Email:</strong> ${userDetails.email}</p>
+          <p><strong>First Name:</strong> ${userDetails.firstName}</p>
+          <p><strong>Last Name:</strong> ${userDetails.lastName}</p>
+          <p><strong>Mobile:</strong> ${userDetails.mobileNumber}</p>
+          <p><strong>Date of Birth:</strong> ${userDetails.dateOfBirth}</p>
+          <p><strong>Gender:</strong> ${userDetails.gender}</p>
+        `;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("Unable to fetch user details. Please log in again.");
+        window.location.href = "login.html";
+      });
+    } else {
+      alert("No JWT token found. Please log in again.");
+      window.location.href = "login.html";
+    }
+
+    // Handle delete account functionality
+    document.getElementById("deleteAccount").addEventListener("click", function () {
+      if (!jwtToken) {
+        alert("You are not logged in. Please log in to delete your account.");
+        return;
+      }
+
+      if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        fetch("http://localhost:8080/deleteAccount", {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${jwtToken}`,
+            "Content-Type": "application/json"
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            alert("Your account has been deleted successfully.");
+            localStorage.removeItem("userAccountDetails");
+            localStorage.removeItem("jwtToken");
+            window.location.href = "login.html";
+          } else {
+            alert("Failed to delete account. Please try again.");
+          }
+        })
+        .catch(error => {
+          alert("Error deleting account: " + error);
+        });
+      }
+    });
+
+    // Handle update account functionality
+    document.getElementById("updateAccount").addEventListener("click", function () {
+      if (!jwtToken) {
+        alert("You are not logged in. Please log in to update your account.");
+        return;
+      }
+
+      const updatedUserDetails = {
+        userName: prompt("Enter new username", userDetails.userName),
+        email: prompt("Enter new email", userDetails.email),
+        firstName: prompt("Enter new first name", userDetails.firstName),
+        lastName: prompt("Enter new last name", userDetails.lastName),
+        mobileNumber: prompt("Enter new mobile number", userDetails.mobileNumber),
+        dateOfBirth: prompt("Enter new date of birth", userDetails.dateOfBirth),
+        gender: prompt("Enter new gender", userDetails.gender)
+      };
+
+      // Send the updated data to the backend
+      fetch("http://localhost:8080/updateAccount", {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${jwtToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedUserDetails)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Your account has been updated successfully!");
+          localStorage.setItem("userAccountDetails", JSON.stringify(updatedUserDetails));
+          location.reload(); // Reload page to display updated user details
+        } else {
+          alert("Failed to update account. Please try again.");
+        }
+      })
+      .catch(error => {
+        alert("Error updating account: " + error);
+      });
+    });
+  </script>
+</body>
+</html>

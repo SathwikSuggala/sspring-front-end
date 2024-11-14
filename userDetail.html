@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            color: #333;
+        }
+
+        /* User Details Section */
+        #user-details {
+            background-color: white;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #user-details p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        #user-details strong {
+            color: #333;
+        }
+
+        /* Button Styling */
+        .button {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-button {
+            display: inline-block;
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        /* Update Button */
+        .update-button {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .update-button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #user-details {
+                padding: 15px;
+                margin: 10px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>User Details</h1>
+    
+    <div id="user-details">
+        <!-- User details will be injected here -->
+    </div>
+
+    <a href="admin.html" class="button">Back to Dashboard</a>
+    <a href="#" id="deleteAccount" class="delete-button">Delete Account</a>
+    <a href="#" id="updateAccount" class="update-button">Update Account</a>
+
+    <script>
+        // Get the user details from localStorage
+        const userDetails = JSON.parse(localStorage.getItem('userAccountDetails'));
+
+        if (userDetails) {
+            // Populate the user details section with the fetched data
+            const userDetailsDiv = document.getElementById('user-details');
+            userDetailsDiv.innerHTML = `
+                <p><strong>Username:</strong> ${userDetails.userName}</p>
+                <p><strong>Email:</strong> ${userDetails.email}</p>
+                <p><strong>First Name:</strong> ${userDetails.firstName}</p>
+                <p><strong>Last Name:</strong> ${userDetails.lastName}</p>
+                <p><strong>Mobile:</strong> ${userDetails.mobileNumber}</p>
+                <p><strong>Date of Birth:</strong> ${userDetails.dateOfBirth}</p>
+                <p><strong>Gender:</strong> ${userDetails.gender}</p>
+            `;
+        } else {
+            alert('No user details found. Please log in again.');
+            window.location.href = 'login.html';  // Redirect to login if no details found
+        }
+
+        // Handle delete account functionality
+        document.getElementById('deleteAccount').addEventListener('click', function() {
+            const token = localStorage.getItem('jwtToken');  // Assuming JWT token is stored in localStorage
+
+            if (!token) {
+                alert('You are not logged in. Please log in to delete your account.');
+                return;
+            }
+
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                fetch('https://springsecuritytrail.onrender.com/deleteAccount', {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + token, // Send token in Authorization header
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Your account has been deleted successfully.');
+                        localStorage.removeItem('userAccountDetails');  // Clear user details from localStorage
+                        localStorage.removeItem('jwtToken');  // Clear the token
+                        window.location.href = 'login.html';  // Redirect to login page
+                    } else {
+                        alert('Failed to delete account. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    alert('Error deleting account: ' + error);
+                });
+            }
+        });
+
+        // Handle update account functionality
+        document.getElementById('updateAccount').addEventListener('click', function() {
+            const token = localStorage.getItem('jwtToken');  // Assuming JWT token is stored in localStorage
+
+            if (!token) {
+                alert('You are not logged in. Please log in to update your account.');
+                return;
+            }
+
+            const updatedUserDetails = {
+                userName: prompt("Enter new username", userDetails.userName),
+                email: prompt("Enter new email", userDetails.email),
+                firstName: prompt("Enter new first name", userDetails.firstName),
+                lastName: prompt("Enter new last name", userDetails.lastName),
+                mobileNumber: prompt("Enter new mobile number", userDetails.mobileNumber),
+                dateOfBirth: prompt("Enter new date of birth", userDetails.dateOfBirth),
+                gender: prompt("Enter new gender", userDetails.gender),
+            };
+
+            // Send the updated data to the backend
+            fetch('https://springsecuritytrail.onrender.com/updateAccount', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + token, // Send token in Authorization header
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedUserDetails),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Your account has been updated successfully!');
+                    localStorage.setItem('userAccountDetails', JSON.stringify(updatedUserDetails));  // Save updated details to localStorage
+                    // Reload page to display updated user details
+                    location.reload();
+                } else {
+                    alert('Failed to update account. Please try again.');
+                }
+            })
+            .catch(error => {
+                alert('Error updating account: ' + error);
+            });
+        });
+    </script>
+</body>
+</html>

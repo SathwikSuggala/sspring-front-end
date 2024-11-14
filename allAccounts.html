@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Accounts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        .user {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            color: #333;
+        }
+        .role {
+            font-weight: bold;
+        }
+        /* Role-based color styles */
+        .customer-role {
+            background-color: #e3f2fd; /* Light blue for customers */
+            border-color: #2196f3;
+        }
+        .admin-role {
+            background-color: #ffebee; /* Light red for admins */
+            border-color: #f44336;
+        }
+        .seller-role {
+            background-color: #e8f5e9; /* Light green for sellers */
+            border-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>User Accounts</h1>
+    <div id="users-container"></div>
+
+    <script>
+        async function fetchUsers() {
+            try {
+                // Get JWT token from local storage
+                const jwtToken = localStorage.getItem('jwtToken');
+                if (!jwtToken) {
+                    alert('JWT token not found in local storage!');
+                    return;
+                }
+
+                // Call the API
+                const response = await fetch('https://springsecuritytrail.onrender.com/admin/getAllUsers', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${jwtToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+
+                const users = await response.json();
+                displayUsers(users);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while fetching users');
+            }
+        }
+
+        function displayUsers(users) {
+            const container = document.getElementById('users-container');
+            container.innerHTML = '';
+
+            users.forEach((user) => {
+                const userDiv = document.createElement('div');
+                userDiv.className = 'user';
+
+                // Apply role-based color classes
+                if (user.role === 'CUSTOMER') {
+                    userDiv.classList.add('customer-role');
+                } else if (user.role === 'ADMIN') {
+                    userDiv.classList.add('admin-role');
+                } else if (user.role === 'SELLER') {
+                    userDiv.classList.add('seller-role');
+                }
+
+                userDiv.innerHTML = `
+                    <h3>User: ${user.userName} <span class="role">(${user.role})</span></h3>
+                    <div class="user-info">
+                        <p><strong>ID:</strong> ${user.id}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Mobile Number:</strong> ${user.mobileNumber}</p>
+                        <p><strong>Name:</strong> ${user.firstName} ${user.lastName}</p>
+                        <p><strong>Date of Birth:</strong> ${user.dateOfBirth}</p>
+                        <p><strong>Gender:</strong> ${user.gender}</p>
+                        <p><strong>Created At:</strong> ${user.createdAt ? user.createdAt : 'N/A'}</p>
+                        <p><strong>Updated At:</strong> ${user.updatedAt ? user.updatedAt : 'N/A'}</p>
+                        <p><strong>Deleted At:</strong> ${user.deletedAt ? user.deletedAt : 'N/A'}</p>
+                    </div>
+                `;
+                
+                container.appendChild(userDiv);
+            });
+        }
+
+        // Fetch users when the page loads
+        window.onload = fetchUsers;
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        background-image: url("back.jpg");
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 50%;
+        max-width: 600px;
+        background-color: rgb(255, 255, 255, 0.8);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        margin-top: 50px;
+        animation: fadeIn 0.6s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        text-align: center;
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-weight: bold;
+        color: #333;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        margin-right: 120px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: border-color 0.3s ease;
+        width: 570px;
+      }
+
+      .form-group input:focus {
+        border-color: #28a745;
+        outline: none;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+      }
+
+      .form-group button {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 6px;
+        width: 100%;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .form-group button:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(33, 136, 56, 0.3);
+      }
+
+      .error-message {
+        color: #dc3545;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 90%;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Login</h2>
+
+      <div class="error-message" id="error-message"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="userName">Username:</label>
+          <input type="text" id="userName" name="userName" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="form-group">
+          <button type="button" onclick="login()">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const apiUrl = "https://springsecuritytrail.onrender.com"; // Update with your backend API URL
+
+      function login() {
+        // Clear any previous error message
+        document.getElementById("error-message").innerText = "";
+
+        // Collect form data
+        const authRequestDto = {
+          userName: document.getElementById("userName").value,
+          password: document.getElementById("password").value,
+        };
+
+        // Send login request
+        fetch(apiUrl + "/authenticate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(authRequestDto),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              return response.text().then((text) => {
+                throw new Error(text);
+              });
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Store JWT token and role in local storage
+            localStorage.setItem("jwtToken", data.jwt);
+            localStorage.setItem("userRole", data.role);
+
+            // Retrieve and log the stored jwtToken and userRole
+            const jwtToken = localStorage.getItem("jwtToken");
+            const userRole = localStorage.getItem("userRole");
+            console.log("JWT Token:", jwtToken);
+            console.log("User Role:", userRole);
+
+            // Redirect based on role
+            if (data.role === "ROLE_CUSTOMER") {
+              window.location.href = "home.html"; // Redirect to customer's home page
+            } else if (data.role === "ROLE_ADMIN") {
+              window.location.href = "admin.html"; // Redirect to admin's home page
+            } else if (data.role === "ROLE_SELLER") {
+              window.location.href = "seller.html"; // Redirect to seller's home page
+            } else {
+              document.getElementById("error-message").innerText =
+                "Invalid role";
+            }
+          })
+          .catch((error) => {
+            document.getElementById(
+              "error-message"
+            ).innerText = `Error: ${error.message}`;
+          });
+      }
+    </script>
+  </body>
+</html>
