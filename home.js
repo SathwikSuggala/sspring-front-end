@@ -167,8 +167,18 @@ async function addToCart(productId, quantity) {
           : "Failed to add product to cart."
       );
     } else {
-      console.error("Failed to add product to cart:", response.statusText);
+      // Parse the error response from the API
+      try {
+        const errorResponse = await response.json(); // Parse JSON response
+        alert("Failed to add product to cart: " + errorResponse.error);
+        window.location.reload();
+      } catch (e) {
+        // Handle cases where the response body isn't JSON
+        alert("An unexpected error occurred.");
+        window.location.reload();
+      }
     }
+    
   } catch (error) {
     console.error("Error adding product to cart:", error);
   }
